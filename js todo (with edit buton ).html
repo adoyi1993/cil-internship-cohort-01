@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script src="https://kit.fontawesome.com/4dbe05df6b.js" crossorigin="anonymous"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS Todo_List</title>
+</head>
+<style>
+    body {
+        background: linear-gradient(to bottom left, #003366 0%, #cc66ff 100%);
+        color: #333;
+        font-family: Lato, sans-serif;
+      }
+      .container {
+        display: block;
+        width: 600px;
+        margin: 100px auto 0;
+        background-color: #cc66ff;
+        border-radius: 20px;
+        height: 800px;
+      }
+
+      .cont1{
+
+        margin-left: 20px;
+        margin-right: 20px;
+        
+        
+      }
+      input{
+          border-radius: 5px;
+          border: none;
+          outline: none;
+      }
+      button{
+          border-radius: 5px;
+          border: none;
+          outline: none;
+      }
+      ul li {
+        cursor: pointer;
+        position: relative;
+        padding: 12px 8px 12px 40px;
+        list-style-type: none;
+        background: #eee;
+        font-size: 18px;
+        transition: 0.2s;
+        border: 1px solid #202040;
+        border-radius: 10px;
+        margin-bottom: 5px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        }
+        hr{
+            border: 2px solid #202040;
+        }
+       
+      #finished-tasks label {
+        text-decoration: line-through;
+        color: #888;
+      }
+
+    
+</style>
+<body>
+    <div class="container">
+        
+        <h1><span class="title"  style= "font-size: 100px; padding-left: 280px; color: #003366;"> <i class="fas fa-clipboard-list" ></i></span></h1>
+        <div class="cont1">
+        <p>
+         <h3>Add Item</h3><input placeholder="Enter todo" id="new-task" type="text" style="height:50px; width:460px; margin-left: 40px;  border: 1px solid #202040;   border-radius: 10px;" >&nbsp; <button style="height:50px; width:40px;  border: 1px solid #202040;   border-radius: 10px;">Add</button>
+        </p>
+        
+        <h3>Todos</h3> <hr/>
+        <ul id="unfinished-tasks">
+          <li><input type="checkbox"><label>Wash my hair</label><input type="text"> <button class="edit">Edit</button> <button class="delete">Delete</button></li>
+          <li class="editable"><input type="checkbox"><label>wash my feet</label><input type="text" value="wash my feet">  <button class="edit">Edit</button> <button class="delete">Delete</button></li>
+          
+        </ul>
+        
+        <h3>Completed Task</h3> <hr/>
+        <ul id="finished-tasks">
+          <li><input type="checkbox" checked><label>See the Doctor</label><input type="text"><button class="edit">Edit</button> <button class="delete">Delete</button></li>
+        </ul>
+    </div>
+    </div>
+
+<script>
+ // Variable Declarations
+var taskInput=document.getElementById("new-task");//Add a new task.
+var addButton=document.getElementsByTagName("button")[0];//first button
+var unfinishedTaskHolder=document.getElementById("unfinished-tasks");//ul of #unfinished-tasks
+var finishedTasksHolder=document.getElementById("finished-tasks");//finished-tasks
+
+
+        
+//Task List
+var NewTaskNodes=function(task){
+  //List Item
+var listItem=document.createElement("li");
+//input (checkbox)
+var checkBox=document.createElement("input");//checkbox
+//label
+var label=document.createElement("label");//label
+//input (text)
+var editInput=document.createElement("input");//text
+//Edit Button
+var editButton=document.createElement("button");//edit button
+//Delete Button
+var deleteButton=document.createElement("button");//delete button
+
+label.innerText=task;
+
+//Assigning the input types
+checkBox.type="checkbox";
+editInput.type="text";
+
+editButton.innerText="Edit";
+editButton.className="edit";
+deleteButton.innerText="Delete";
+deleteButton.className="delete";
+
+//appending the nodes.
+listItem.appendChild(checkBox);
+listItem.appendChild(label);
+listItem.appendChild(editInput);
+listItem.appendChild(editButton);
+listItem.appendChild(deleteButton);
+return listItem;
+}
+
+//Adding tasks
+  var addTask=function(){
+var listItem=NewTaskNodes(taskInput.value);
+unfinishedTaskHolder.appendChild(listItem);
+bindTaskEvents(listItem, taskCompleted);
+
+taskInput.value="";
+  
+}
+
+
+
+//Edit an existing task.
+var editTask=function(){
+var listItem=this.parentNode;
+
+var editInput=listItem.querySelector('input[type=text]');
+var label=listItem.querySelector("label");
+var containsClass=listItem.classList.contains("editable");
+	
+		if(containsClass){
+
+			label.innerText=editInput.value;
+		}else{
+			editInput.value=label.innerText;
+		}
+
+		listItem.classList.toggle("editable");
+}
+
+//Delete task.
+var deleteTask=function(){
+
+		var listItem=this.parentNode;
+		var ul=listItem.parentNode;
+		ul.removeChild(listItem);
+
+}
+
+var taskCompleted=function(){
+
+	var listItem=this.parentNode;
+	finishedTasksHolder.appendChild(listItem);
+				bindTaskEvents(listItem, taskIncomplete);
+
+}
+
+
+
+var taskIncomplete=function(){
+	unfinishedTaskHolder.appendChild(listItem);
+			bindTaskEvents(listItem,taskCompleted);
+}
+
+  addButton.onclick= addTask
+  
+
+var bindTaskEvents=function(taskListItem,checkBoxEventHandler){
+	var checkBox=taskListItem.querySelector("input[type=checkbox]");
+	var editButton=taskListItem.querySelector("button.edit");
+	var deleteButton=taskListItem.querySelector("button.delete");
+
+
+			editButton.onclick=editTask;
+			deleteButton.onclick=deleteTask;
+			checkBox.onchange=checkBoxEventHandler;
+}
+
+	for (var i=0; i<unfinishedTaskHolder.children.length;i++){
+
+		bindTaskEvents(unfinishedTaskHolder.children[i],taskCompleted);
+	}
+
+	for (var i=0; i<finishedTasksHolder.children.length;i++){
+		bindTaskEvents(finishedTasksHolder.children[i],taskIncomplete);
+	}
+
+
+</script>
+  
+</body>
+</html>

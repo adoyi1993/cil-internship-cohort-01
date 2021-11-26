@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>TO DO LIST BY ADOYI BONIFACE</title>
+<script src="https://kit.fontawesome.com/4dbe05df6b.js" crossorigin="anonymous"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body {
+  margin: 0;
+  min-width: 250px;
+  background-color: silver;
+  font-family: Rockwell;
+
+}
+
+* {
+  box-sizing: border-box;
+}
+
+ul {
+  margin-left: 20%;
+  margin-right: 20%;
+  padding: 0;
+}
+
+ul li {
+  cursor: pointer;
+  position: relative;
+  padding: 12px 8px 12px 40px;
+  list-style-type: none;
+  background: #eee;
+  font-size: 18px;
+  transition: 0.2s;
+  border: 1px solid #202040;
+  border-radius: 10px;
+ margin-bottom: 5px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+
+ul li:nth-child(odd) {
+  background: #f9f9f9;
+}
+
+ul li:hover {
+  background: #ddd;
+}
+
+ul li.checked {
+  background: #888;
+  color: red;
+  text-decoration: line-through;
+}
+
+ul li.checked::before {
+  content: '';
+  position: absolute;
+  border-color: #202040;
+  border-style: solid;
+  border-width: 0 2px 2px 0;
+  top: 10px;
+  left: 16px;
+  transform: rotate(45deg);
+  height: 15px;
+  width: 7px;
+}
+
+.close {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 12px 16px 12px 16px;
+  color: red;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.close:hover {
+  background-color: #f44336;
+  height: 45px;
+  border-radius: 10px;
+  
+}
+
+.header {
+  background-color: #202040;
+  padding: 30px 40px;
+  color: white;
+  text-align: center;
+}
+
+.header:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+input {
+  margin: 0;
+  border: none;
+  border-radius: 10px;
+  width: 75%;
+  padding: 10px;
+  float: left;
+  font-size: 16px;
+}
+
+.addBtn {
+  padding: 10px;
+  width: 9%;
+  background: #d9d9d9;
+  color: #000;
+  float: left;
+  text-align: center;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+  border-radius: 10px;
+  margin-left: 10px;
+}
+
+.addBtn:hover {
+  background-color: #bbb;
+}
+#clear-list{
+background: #202040;
+color: red;
+align-items: center;
+margin-left: 47%;
+padding: 10px;
+border-radius: 10px;
+margin-top: 10px;
+cursor: pointer;
+outline: none;
+border: none;
+font-family: Rockwell;
+}
+
+
+</style>
+</head>
+<body>
+
+<div id="myDIV" class="header">
+
+  <h1><span class="title"  style= "font-size: 150px;"> <i class="fas fa-clipboard-list"></i></span></h1>
+
+   <h2 style="margin:5px; color: red; text-transform: uppercase; ">To Do List</h2> <h3 id="date"></h3> 
+  <input type="text" id="myInput" placeholder="Enter Here........." style="margin-left: 7%;">
+  <span onclick="Element_New()" class="addBtn">Add</span>
+</div>
+
+<ul id="UL">
+  <li>Make Breakfast</li>
+  <li class="checked">Go to the Office</li>
+  <li>Attend Meeting</li>
+  
+</ul>
+
+<button  type="button" id="clear-list" onclick="removeAll()">Clear All Items</button>
+
+<script>
+
+var list = document.getElementsByTagName("LI");
+var i;
+for (i = 0; i < list.length; i++) {
+  var span = document.createElement("SPAN");
+  var txt = document.createTextNode("\u00D7");
+  span.className = "close";
+  span.appendChild(txt);
+  list[i].appendChild(span);
+}
+
+
+var close = document.getElementsByClassName("close");
+var i;
+for (i = 0; i < close.length; i++) {
+  close[i].onclick = function() {
+    var div = this.parentElement;
+    div.style.display = "none";
+  }
+}
+
+
+var list = document.querySelector('ul');
+list.addEventListener('click', function(ev) {
+  if (ev.target.tagName === 'LI') {
+    ev.target.classList.toggle('checked');
+  }
+}, false);
+
+
+function Element_New() {
+  var li = document.createElement("li");
+  var inputValue = document.getElementById("myInput").value;
+  var t = document.createTextNode(inputValue);
+  li.appendChild(t);
+  if (inputValue === '') {
+    alert("Cannot be left blank, Plese enter a value!");
+  } else {
+    document.getElementById("UL").appendChild(li);
+  }
+  document.getElementById("myInput").value = "";
+
+  var span = document.createElement("SPAN");
+  var txt = document.createTextNode("\u00D7");
+  span.className = "close";
+  span.appendChild(txt);
+  li.appendChild(span);
+
+  for (i = 0; i < close.length; i++) {
+    close[i].onclick = function() {
+      var div = this.parentElement;
+      div.style.display = "none";
+    }
+  }
+}
+
+
+function removeAll(){
+  var clear = document.getElementsByTagName("ul");
+  clear[0].innerHTML = ""
+}
+
+const date = new Date();
+document.getElementById("date").innerHTML = date;
+
+
+
+
+</script>
+
+</body>
+</html>
