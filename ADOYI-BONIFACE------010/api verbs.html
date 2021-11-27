@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API FETCH VERBS</title>
+     <script src="https://kit.fontawesome.com/4dbe05df6b.js" crossorigin="anonymous"></script>
+    <Style>
+        /* CSS Part */
+        body{
+            background-image: linear-gradient(to right, #8E2DE2 , #4A00E0);
+          
+        }
+        .gett, .putt{
+            
+            float: left;
+            width: 50%;
+        }
+
+        .container:after {
+            content: "";
+            display: table;
+            clear: both;
+            }
+
+            #get{
+            cursor: pointer;
+            background: orangered;
+            width: 130px;
+            padding: 9px;
+            border-radius: 5px;
+            color: #fff;
+            margin-left: 40%;
+
+        }
+        #get:hover{
+            background: red;
+        }
+        h1{
+            text-align: center;
+            color: #FFF;
+        }
+        table{
+            width: 80%;
+            margin-left:5%;
+        }
+        table, th, td {
+            border-collapse: collapse;
+            text-align: left;
+            padding-top: 10px;
+            padding-bottom: 20px;
+            padding-left: 30px;
+            padding-right: 40px;
+        }
+    
+        tr:nth-child(odd) {
+        background-color: #D6EEEE;
+        }
+
+        tr:nth-child(even) {
+        background-color: gray;
+        }
+
+        form{
+            margin-left: 5%; 
+        }
+        input[type=text]{
+            width: 50%;
+            padding: 12px 20px;
+            margin: 4px 0;
+            border: none;
+            }
+            input[type=number]{
+            width: 50%;
+            padding: 12px 20px;
+            margin: 5px 0;
+            border: none;
+            }
+            input[type=bool]{
+            width: 50%;
+            padding: 12px 20px;
+            margin: 4px 0;
+            outline: none;
+            border: none;
+            }
+
+        .heading{
+            text-align: center;
+        }
+        input{
+            border-radius: 10px;
+            height: 30px;
+            size: 60;
+        }
+        #post{
+          
+            cursor: pointer;
+            background: blue;
+            width: 130px;
+            padding: 9px;
+            border-radius: 5px;
+            color: #fff;   
+
+        }
+        #post:hover{
+          
+          background: red;}
+
+          #put:hover{
+          
+          background: red;}
+
+        #put{
+          
+          cursor: pointer;
+          background: purple;
+          width: 130px;
+          padding: 9px;
+          border-radius: 5px;
+          color: #fff;   
+            }
+
+        #output{
+            margin-top: o;
+            margin-left: 5%;
+            background-color: cornsilk;
+            border-radius: 10px;
+            width: 50%;
+            height: 250px;
+            text-align: left;
+        }
+        h1{
+            color: cornsilk;
+        }
+        p{
+            color: black;
+            padding-left: 30px;
+            padding-top: 20px;
+            font-weight: bold;
+            font-size: 20px;
+        }
+</Style>
+</head>
+<body>
+    <h1  style="color: orange;">GET|| PUT|| POST|| METHODS</h1>
+    <!--GET METHOD-->
+     
+    <marquee behavior="scroll" direction="right" scrollamount="12" style="color: orange;"> <strong> CLICK GET TODO TO GET TODO AND FILL THE FORM BELOW AND CLICK POST TODO OR PUT TODO TO POST OR PUT TODO</strong>  </marquee> <br/> <br/><br/>
+    <div class="container">
+    <div class="putt">
+        <!--PUT AND POST METHOD--> 
+        <br/>  <br/> 
+      
+         <form id="form">
+             <input type="number" id="id" placeholder="Enter Id" > <br/> <br/>
+             <input type="number" id="userId" placeholder="Enter User-Id"> <br/> <br/>
+             <input type="text" id="title" placeholder="Enter Title" > <br/> <br/>
+             <input type="bool" id="completed" placeholder="Enter Completion Status"> <br/> <br/>
+             <button id="post" onclick="PostTodo()">Post Todo</button>
+             <button id="put" onclick="putTodo()">Put Todo</button> <br/> <br/>
+             <i style="color: chocolate;  font-size: 60px; padding-left: 200px; padding-top: 2px;"  class="fas fa-hand-point-down"></i>
+         </form>
+         <br/> <br/><br/>
+     
+         <div id="output">
+    
+         </div>
+     </div>
+
+      <div class="gett"> 
+    
+      <button id="get" onclick="GetTodo()">Get Todo</button>  <br/><br/>
+     <i style="color: chocolate;  font-size: 60px; padding-left: 200px; padding-top: 2px; padding-top: 10px; padding-left: 430px;"  class="fas fa-hand-point-down"></i>
+    
+      <!-- Table to display fetched user data -->
+      <table id="users"></table>
+    </div>  
+</div>
+
+<script>
+
+//Get Todo function
+function GetTodo(){
+
+fetch("https://jsonplaceholder.typicode.com/todos")
+
+// Converting received data to JSON
+.then(response => response.json())
+
+.then(json => {
+
+    // Create a variable to store HTML
+    let li = `<tr><th>ID</th><th>USER-ID</th><th>TITLE</th><th>COMPLETED</th></tr>`;
+   
+    // Loop through each data and add a table row
+    json.forEach(user => {
+        li += `<tr>
+            <td>${user.id} </td>
+            <td>${user.userId}</td>  
+            <td>${user.title}</td>
+            <td>${user.completed}</td>      
+        </tr>`;
+    });
+    console.log(json)
+    
+
+// Display result
+document.getElementById("users").innerHTML = li;
+});
+
+}
+
+//Post Todo function         
+function PostTodo(){
+var form  = document.getElementById("form")
+
+form.addEventListener('click', function(e){
+
+    e.preventDefault()
+    
+var id = document.getElementById("id").value
+var userId = document.getElementById("userId").value
+var title = document.getElementById("title").value
+var completed = document.getElementById("completed").value
+
+
+fetch('https://jsonplaceholder.typicode.com/todos', {
+    method: 'POST',
+    headers: {'content-type': 'application/json'},
+    body: JSON.stringify({
+    userId: userId ,
+    id: id,
+    title: title,
+    completed: completed
+    })
+})
+.then(response=>response.json())
+.then(function(data){
+    console.log(data)
+    var output = document.getElementById("output")
+  output.innerHTML = `<p> The UserId is ${data.userId}</p> <p> The Id is ${data.id}</p><p> The Title is ${data.title}</p><p> The Completion status is  ${data.completed}</p>`
+
+})
+
+ // Handle the error
+.catch((error) => {
+    console.log(error);
+  });
+
+})
+}     
+
+//Put Todo function
+function putTodo(){
+var form  = document.getElementById("form")
+form.addEventListener('click', function(e){
+    e.preventDefault()
+
+var id = document.getElementById("id").value
+var userId = document.getElementById("userId").value
+var title = document.getElementById("title").value
+var completed = document.getElementById("completed").value
+
+
+fetch('https://jsonplaceholder.typicode.com/todos/1', {
+    method: 'PUT',
+    headers: {'content-type': 'application/json'},
+    body: JSON.stringify({
+    userId: userId ,
+    id: id,
+    title: title,
+    completed: completed
+    })
+})
+.then(response=>response.json())
+.then(function(data){
+    console.log(data)
+    var output = document.getElementById("output")
+  output.innerHTML = `<p> The UserId is ${data.userId}</p> <p> The Id is ${data.id}</p><p> The Title is ${data.title}</p><p> The Completion status is  ${data.completed}</p>`
+
+})
+})
+}
+</script> 
+</body>
+</html>
