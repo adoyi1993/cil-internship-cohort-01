@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js "></script>
+  <title>Contact Manager</title>
+    <style>
+        
+        .ul{
+            list-style-type: none;
+            display: flex;
+            
+        }
+        li{
+            margin-left: 10px;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="app" class="container-fluid">
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+              <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+                <div class="container">
+                <router-link  to= "#" style="margin-left: 350px;" class="navbar-brand" > Contact Manager</router-link>   </div>
+              </div>
+              <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav  ul">
+                  <li><router-link to='/home.js' > <i class="fas fa-home"></i>   Home   </router-link></li>
+                          <li><router-link to='/add.js' > <i class="fas fa-address-book"></i>   Add   </router-link></li>
+                          <li> <router-link to='/about.js' >  <i class="fas fa-question-circle"></i>  About   </router-link>
+                          </li>
+          
+                </ul>
+                
+              </div>
+            </div>
+          </nav>
+        
+       
+
+
+        <router-view>  </router-view>
+    </div>
+    
+</body>
+</html>
+<script src="home.js"></script>
+<script src="add.js"></script>
+<script src="about.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+<script src="https://unpkg.com/vue-router@2.0.0/dist/vue-router.js"></script>
+<script type="text/javascript" >
+
+
+const routes = [
+    {path: '/home.js', component: Home},
+    {path: '/add.js', component: Add},
+    {path: '/about.js', component: About}
+]
+
+const router = new VueRouter({
+    routes:routes
+})
+
+
+
+new Vue({
+ router, 
+  el: '#app',
+
+  })
+
+
+
+
+</script>

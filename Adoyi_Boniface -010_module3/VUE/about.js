@@ -1,0 +1,1 @@
+const About = { template: '<div class = "container"> <h1>About Us</h1> <h4 >This is an app created to manage contacts. It could be seen and used as a backup for your contacts. &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;...Version 1.0.0 <h4></div>' }
